@@ -125,16 +125,6 @@ public:
         return &Heads[n];
     }
 
-    friend List *begin(Graph<T> &g)
-    {
-        return &g.Heads[0];
-    }
-
-    friend List *end(Graph<T> &g)
-    {
-        return &g.Heads[g.n];
-    }
-
     void addEdge(T from, T to) // O(1)
     {
         Heads[from].add(to);
