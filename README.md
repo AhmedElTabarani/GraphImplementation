@@ -10,8 +10,6 @@
     * **functions to handle for(:) *`// Needs some test cases`***
       * `begin()`
       * `end()`
-      * `begin(Graph)`
-      * `end(Graph)`
     * `addEdge(T from, T to) //may be deleted`
     * `size()`
     * `operator[](index)`
