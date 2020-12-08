@@ -10,7 +10,7 @@
     * **functions to handle for(:) *`// Needs some test cases`***
       * `begin()`
       * `end()`
-    * `addEdge(T from, T to) //may be deleted`
+    * `addEdge(T from, T to)`
     * `size()`
     * `operator[](index)`
     * ### List Class:
@@ -20,3 +20,11 @@
       * `begin() // return Iterator`
       * `end() // return Iterator`
       * `operator[](index) // O(n), Needs improvement and optimization (will be changed)`
+
+## What is Next ?
+
+* ### Functions
+  * **Shorties Path betwen Two Nodes** *`// Path and Distance`*
+  * **Longies Path between Two Nodes** *`// Path and Distance`*
+  * **Count Connected Components** 
+  * **Is Two Nodes in the same Component**
