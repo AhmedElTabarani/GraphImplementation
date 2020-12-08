@@ -1,7 +1,8 @@
 #include <iostream>
+#include <stdexcept>
 using namespace std;
 
-template <typename T>
+template <typename T> // not support char and string type yet
 class Graph
 {
     class List
@@ -91,15 +92,27 @@ class Graph
 
         T &operator[](long long i) // O(n), Needs improvement and optimization (will be changed)
         {
-            Node *temp = head;
-            long long cnt = 0;
-            while (temp != NULL)
+            try
             {
-                if (cnt == i)
-                    return temp->info;
+                if (i >= _size || i < 0)
+                    throw i;
 
-                ++cnt;
-                temp = temp->next;
+                Node *temp = head;
+                long long cnt = 0;
+                while (temp != NULL)
+                {
+                    if (cnt == i)
+                        return temp->info;
+
+                    ++cnt;
+                    temp = temp->next;
+                }
+            }
+
+            catch (long long _i)
+            {
+                cout << "OutOfRangeError: Can't access index '" << _i << "' by brackets index[..] is out of list range";
+                exit(0);
             }
         }
     }; // end list class
@@ -114,7 +127,6 @@ public:
     }
 
     // functions to handle for(:)
-    // Needs some test cases
     List *begin()
     {
         return &Heads[0];
@@ -127,7 +139,19 @@ public:
 
     void addEdge(T from, T to) // O(1)
     {
-        Heads[from].add(to);
+        try
+        {
+            if (from >= n || from < 0)
+                throw from;
+
+            Heads[from].add(to);
+        }
+
+        catch (T _from)
+        {
+            cout << "OutOfRangeError: In function 'addEdge', Index '" << _from << "' is out of graph range";
+            exit(0);
+        }
     }
 
     long long size()
@@ -135,9 +159,21 @@ public:
         return n;
     }
 
-    List &operator[](long long i) // need try catch exception (out of the range)
+    List &operator[](long long i)
     {
-        return Heads[i];
+        try
+        {
+            if (i >= n || i < 0)
+                throw i;
+
+            return Heads[i];
+        }
+
+        catch (long long _i)
+        {
+            cout << "OutOfRangeError: Can't access index '" << _i << "' by brackets index[..] is out of graph range";
+            exit(0);
+        }
     }
 
     ~Graph()
@@ -161,7 +197,7 @@ int main()
         g.addEdge(from, to);
         g.addEdge(to, from); // for undirected graph
 
-        // add in o(n)
+        // add in o(1)
         //	g[from].add(to);
         //	g[to].add(from);	// for undirected graph
     }
@@ -172,7 +208,7 @@ int main()
     {
         cout << node << " -> ";
         for (int child = 0; child < g[node].size(); ++child)
-            cout << g[node][child] << ' ';
+            cout << g[node][child] << ' '; // access child by brackets index [child] is O(n) (will be improvement)
         cout << '\n';
     }
 
