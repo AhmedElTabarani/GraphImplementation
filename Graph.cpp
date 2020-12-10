@@ -1,5 +1,4 @@
 #include <iostream>
-#include <stdexcept>
 using namespace std;
 
 template <typename T> // not support char and string type yet
