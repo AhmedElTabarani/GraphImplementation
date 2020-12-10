@@ -1,4 +1,5 @@
-## The Project started on 2020/12/3
+# Graph Implementation Project
+##### **The Project started on 2020/12/3**
 
 #### Support for range `for(:)`
 
@@ -28,3 +29,5 @@
   * **Longies Path between Two Nodes** *`// Path and Distance`*
   * **Count Connected Components** 
   * **Is Two Nodes in the same Component**
+  * **Weighting Graph**
+  * **Maze(Grid)** 
