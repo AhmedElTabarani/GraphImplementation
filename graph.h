@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-template <typename T> // not support char and string type yet
+template <typename T> // not support char and string type
 class Graph
 {
     class List
@@ -18,6 +18,7 @@ class Graph
             Node *ptr;
 
         public:
+            Iterator() : ptr(NULL) {}
             Iterator(Node *p) : ptr(p) {}
 
             Iterator &operator=(Iterator &Np)
@@ -73,7 +74,16 @@ class Graph
             tail->next = temp;
             tail = temp;
         }
+        T pop() // need exception
+        {
+            --_size;
+            T val = head->info;
+            Node *tmp = head;
+            head = head->next;
+            delete tmp;
 
+            return val;
+        }
         long long size()
         {
             return _size;
@@ -119,12 +129,26 @@ class Graph
     // member data of graph class
     long long n; // Number of nodes
     List *Heads; // Adjacency List
+
+    void dfs(bool *visited, T node)
+    {
+        for (auto child : Heads[node])
+            if (!visited[child])
+            {
+                visited[child] = true;
+                dfs(visited, child);
+            }
+    }
+
 public:
-    Graph(long long nodes) : n(nodes)
+    Graph(long long nodes = 0) : n(nodes)
     {
         Heads = new List[nodes]; // create Adjacency List
     }
-
+    long long size()
+    {
+        return n;
+    }
     // functions to handle for(:)
     List *begin()
     {
@@ -152,12 +176,6 @@ public:
             exit(0);
         }
     }
-
-    long long size()
-    {
-        return n;
-    }
-
     List &operator[](long long i)
     {
         try
@@ -174,6 +192,43 @@ public:
             exit(0);
         }
     }
+    long long countConnectedComponents()
+    {
+        long long cnt = 0;
+        bool visited[n];
+        for (T node = 0; node < n; ++node)
+        {
+            if (!visited[node])
+            {
+
+                ++cnt;
+                visited[node] = true;
+                dfs(visited, node);
+            }
+        }
+        return cnt;
+    }
+    List<T>::Iterator isTherePath(T from, T to)
+    {
+        bool visited[n];
+        T parent[n];
+        bool isThere = false;
+        List que;
+
+        que.add(from);
+        visited[from] = true;
+        parent[from] = -1;
+        T node;
+        while (que.size() > 0)
+        {
+            node = que.pop();
+            for (auto child : Heads[node])
+            {
+                if (to == child)
+                {
+                    isThere = true;
+                    break;
+                }
 
                 if (!visited[child])
                 {
