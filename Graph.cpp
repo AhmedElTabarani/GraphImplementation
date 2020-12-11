@@ -1,6 +1,5 @@
 #include <iostream>
 #include "graph.h"
-
 using namespace std;
 
 int main()
@@ -35,7 +34,6 @@ int main()
 
     cout << '\n';
 
-    // print Graph using for range for(:)
     cout << "Graph : Adjacency List\n";
     for (auto node : g)
     {

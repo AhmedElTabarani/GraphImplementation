@@ -119,7 +119,6 @@ class Graph
     // member data of graph class
     long long n; // Number of nodes
     List *Heads; // Adjacency List
-
 public:
     Graph(long long nodes) : n(nodes)
     {
@@ -176,6 +175,29 @@ public:
         }
     }
 
+                if (!visited[child])
+                {
+                    visited[child] = true;
+                    que.add(child);
+                    parent[child] = node;
+                }
+            }
+            if (isThere)
+                break;
+        }
+        List path;
+        if (isThere)
+        {
+            T tmp = to;
+            long long i = n;
+            while (tmp != -1)
+            {
+                List.add(tmp);
+                tmp = parent[tmp];
+            }
+        }
+        return path.begin();
+    }
     ~Graph()
     {
         delete[] Heads;
