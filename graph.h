@@ -10,7 +10,7 @@ class Graph
         {
             T info;
             Node *next;
-            Node(T val) : info(val), next(NULL) {}
+            Node(T val, Node *nextPtr = NULL) : info(val), next(nextPtr) {}
         };
 
         class Iterator
@@ -74,6 +74,12 @@ class Graph
             tail->next = temp;
             tail = temp;
         }
+        void addFront(T val) // add to head, O(1)
+        {
+            ++_size;
+            Node *tmp = new Node(val, head);
+            head = tmp;
+        }
         T pop() // need exception
         {
             --_size;
@@ -124,6 +130,21 @@ class Graph
                 exit(0);
             }
         }
+        void clear()
+        {
+            Node *curr = head;
+            while (curr)
+            {
+                head = curr->next;
+                delete curr;
+                curr = head;
+            }
+            _size = 0;
+        }
+        ~List()
+        {
+            clear();
+        }
     }; // end list class
 
     // member data of graph class
@@ -137,6 +158,16 @@ class Graph
             {
                 visited[child] = true;
                 dfs(visited, child);
+            }
+    }
+    void color(bool *visited, long long *colored, T node)
+    {
+        for (auto child : Heads[node])
+            if (!visited[child])
+            {
+                visited[child] = true;
+                colored[child] = colored[node];
+                color(visited, colored, child);
             }
     }
 
@@ -208,7 +239,8 @@ public:
         }
         return cnt;
     }
-    List<T>::Iterator isTherePath(T from, T to)
+    // it maybe return a iterator in future
+    List getPath(T from, T to) // Shorties Path
     {
         bool visited[n];
         T parent[n];
@@ -227,6 +259,7 @@ public:
                 if (to == child)
                 {
                     isThere = true;
+                    parent[child] = node;
                     break;
                 }
 
@@ -244,14 +277,31 @@ public:
         if (isThere)
         {
             T tmp = to;
-            long long i = n;
             while (tmp != -1)
             {
-                List.add(tmp);
+                path.addFront(tmp);
                 tmp = parent[tmp];
             }
         }
-        return path.begin();
+        return path; // if path.size() == 0 then there is no path
+    }
+    // it maybe return a iterator in future
+    // or it will return a List, but after improve operatot[] in list class
+    long long *getNodeColors()
+    {
+        bool visited[n];
+        long long *colored = new long long[n];
+        long long cnt = -1;
+        for (long long node = 0; node < n; ++node)
+        {
+            if (!visited[node])
+            {
+                colored[node] = ++cnt;
+                visited[node] = true;
+                color(visited, colored, node);
+            }
+        }
+        return colored;
     }
     ~Graph()
     {
