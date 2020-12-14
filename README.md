@@ -64,9 +64,74 @@
     path.clear() // To clear list
 ```
 
+## Solve : Romania Map Graph
+### From Arad to Bucharest (Unweighted Graph)
+
+```c++
+#include <iostream>
+#include "graph.h"
+using namespace std;
+
+// To store index of each edges
+struct Edges{
+    int src;
+    int dest;
+};
+int main()
+{
+    int n = 20, // Number of nodes
+        e = 23; // Number of edges
+
+   // Representation the cities in array to use it by index
+    string city[n] = {
+            "Arad", "Bucharest", "Craiova", "Dobreta", "Eforie", "Fagaras", "Giurglu",
+            "Hirsova", "Lasi", "Lugoj", "Mehadia", "Neamt", "Oradea", "Pitesti",
+            "RimnicuVilcea", "Sibiu", "Timisoara", "Urziceni", "Vaslui", "Zerind"
+        };
+
+    int src = 0, // Index of "Arad"
+        dest = 1; // Index of "Bucharest"
+
+   // Edges' Input
+    Edges edges[e] = {
+            {0, 19}, {0, 15}, {0, 16}, {19, 12}, {12, 15}, {16, 9}, {15, 5}, {15, 14},
+            {9, 10}, {5, 1}, {14, 13}, {14, 2}, {10, 3}, {1, 13}, {1, 17}, {1, 6},
+            {13, 2}, {2, 3}, {17, 7}, {17, 18}, {7, 4}, {18, 8}, {8, 11}
+        }; 
+   // Create our graph with size n
+    Graph<int> graph(n);
+    
+   // Store all edges in Graph
+    int from, to;
+    for (int i = 0; i < e; ++i)
+    {
+        from = edges[i].src,
+        to = edges[i].dest;
+
+        graph[from].add(to); // or graph.addEdge(from, to);
+    }
+    
+    auto path = graph.getPath(src, dest); // To get the  shorties path from src to dest
+    cout <<"The Shorties Path from "<< city[src] <<" to "<< city[dest] <<"\nPath: ";
+   // Print the Path
+    if(path.size() != 0)
+        for(auto node : path)
+            cout << city[node] <<' ';
+   // Print the distance between src ro dest (number of path's edges)
+   cout <<"\nDistance is: "<< path.size() - 1 <<'\n';
+}
+```
+### Output
+```
+The Shorties Path from Arad to Bucharest
+Path: Arad Sibiu Fagaras Bucharest
+Distance is: 3
+```
 ## What is Next ?
 
 * ### Functions
   * **Longies Path between Two Nodes** *`// Path and Distance`*
+  * **Topological Sort**
   * **Weighting Graph**
+    * **Dijkstra's algorithm** *`// Shorties Path`* 
   * **Maze(Grid)** 
