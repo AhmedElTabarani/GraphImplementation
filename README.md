@@ -23,17 +23,24 @@
 
 ## How is it used ? 
 ```c++
+#include <iostream>
+#include "graph.h"
+
+using namespace std;
+
+int main()
+{
     // Create object from graph with size n and type int
     // You can use only Numerical types
     int n = 5;
     Graph<int> graph(n); // 
 
     // To add an edge
-    graph.addEdge(0, 1); // O(1), or graph[1].add(2) is also O(1)
-    g.addEdge(0, 4);
-    g.addEdge(1, 3);
-    g.addEdge(4, 3);
-    g.addEdge(3, 2);
+    graph.addEdge(0, 1); // O(1), or graph[0].add(1) is also O(1)
+    graph.addEdge(0, 4);
+    graph.addEdge(1, 3);
+    graph.addEdge(4, 3);
+    graph.addEdge(3, 2);
    
    /* Visualization
          0
@@ -44,16 +51,25 @@
          |
          2
    */
-    
     // You can use for range
     cout <<"Print Graph :  Adjacency List\n";
-    for(auto node : graph){
+    for(int node = 0; node < n; ++node){
+        cout << node <<" -> ";
         for(auto child : graph[node]) // operator[] is O(1)
             cout << child <<' ';
         cout <<'\n';
     }
+     /// This may cause the program to stop for an unknown reason
+     /// We are trying to find the cause in the future
+    /* 
+     for(auto list : graph){
+        for(auto child : list)
+            cout << child <<' ';
+        cout <<'\n';
+    }
+   */
     // To get number of components
-    cout << graph.countConnectedComponents() <<'\n';
+    cout <<"No. of Components is: " << graph.countConnectedComponents() <<'\n';
     
     // To get color of nodes
     auto arr = graph.getNodeColors(); // it returns array
@@ -73,9 +89,11 @@
     }
     else
         cout << "There is No Path";
-
+    
+    path.clear(); // To clear list
+    cout <<'\n';
     // To get Topligical Sort
-    auto top = g.getTopligicalSort(); // it returns list
+    auto top = graph.getTopligicalSort(); // it returns list
     if (top.size() > 0) // if top.size() is 0 then there is no graph
     {
         cout <<"The Topligical Sort is:\n";
@@ -85,9 +103,24 @@
     else
         cout <<"There is No Graph";
 
-    path.clear() // To clear list
+    top.clear(); // To clear list
+}
 ```
-
+### Output
+```
+Print Graph :  Adjacency List
+0 -> 1 4
+1 -> 3
+2 ->
+3 -> 2
+4 -> 3
+No. of Components is: 1
+Nodes: 0, 3 are in the same Component
+The Shorties Path between 0, 3 is:
+0 1 3
+The Topligical Sort is:
+0 4 1 3 2
+```
 ## Solve : Romania Map Graph
 ### From Arad to Bucharest (Unweighted Graph)
 
@@ -155,7 +188,6 @@ Distance is: 3
 
 * ### Functions
   * **Longies Path between Two Nodes** *`// Path and Distance`*
-  * **Topological Sort**
   * **Weighting Graph**
     * **Dijkstra's algorithm** *`// Shorties Path`* 
   * **Maze(Grid)** 
