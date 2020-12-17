@@ -11,6 +11,7 @@
     * `countConnectedComponents()`
     * `getPath(T from, T to) // Shorties Path`
     * `getNodeColors()`
+    * `getTopligicalSort()` 
     * ### List Class:
       * **Iterator Class to handle for(:)**
       * `add(val) // add to tail, O(1)`
@@ -24,12 +25,25 @@
 ```c++
     // Create object from graph with size n and type int
     // You can use only Numerical types
-    Graph<int> graph(n);
+    int n = 5;
+    Graph<int> graph(n); // 
 
     // To add an edge
-    graph.addEdge(0, 1); // O(1)
-    // or
-    graph[1].add(2); // O(1)
+    graph.addEdge(0, 1); // O(1), or graph[1].add(2) is also O(1)
+    g.addEdge(0, 4);
+    g.addEdge(1, 3);
+    g.addEdge(4, 3);
+    g.addEdge(3, 2);
+   
+   /* Visualization
+         0
+       /   \
+      1     4
+       \   /
+         3
+         |
+         2
+   */
     
     // You can use for range
     cout <<"Print Graph :  Adjacency List\n";
@@ -44,11 +58,10 @@
     // To get color of nodes
     auto arr = graph.getNodeColors(); // it returns array
 
-
-    if (arr[0] == arr[5]) // useful to check if two nodes in the same component, O(1)
-        cout << "Nodes: 0, 5 are in the same Component\n";
+    if (arr[0] == arr[3]) // useful to check if two nodes in the same component, O(1)
+        cout << "Nodes: 0, 3 are in the same Component\n";
     else
-        cout << "Nodes: 0, 5 are not in the same Component\n";
+        cout << "Nodes: 0, 3 are not in the same Component\n";
 
     // To get path from 0 to 3 (shorties path)
     auto path = graph.getPath(0, 3); // it returns list
@@ -60,7 +73,18 @@
     }
     else
         cout << "There is No Path";
-    
+
+    // To get Topligical Sort
+    auto top = g.getTopligicalSort(); // it returns list
+    if (top.size() > 0) // if top.size() is 0 then there is no graph
+    {
+        cout <<"The Topligical Sort is:\n";
+        for (auto i : top)
+            cout << i << ' ';
+    }
+    else
+        cout <<"There is No Graph";
+
     path.clear() // To clear list
 ```
 
