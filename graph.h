@@ -21,14 +21,24 @@ class Graph
             Iterator() : ptr(NULL) {}
             Iterator(Node *p) : ptr(p) {}
 
-            Iterator &operator=(Iterator &Np)
+            Iterator &operator=(Iterator &it)
             {
-                return Np;
+                return it;
             }
 
             bool operator!=(Iterator &it)
             {
                 return this->ptr != it.ptr;
+            } 
+            Iterator &operator=(Node * np)
+            {   
+                this->ptr = np;
+                return *this;
+            }
+
+            bool operator!=(Node * np)
+            {
+                return this->ptr != np;
             }
 
             Iterator &operator++()
@@ -151,23 +161,26 @@ class Graph
     long long n; // Number of nodes
     List *Heads; // Adjacency List
 
-    void dfs(bool *visited, T node)
+    void dfs(T node, bool *visited, long long *colored = NULL)
     {
         for (auto child : Heads[node])
             if (!visited[child])
             {
                 visited[child] = true;
-                dfs(visited, child);
+                if (colored != NULL)
+                    colored[child] = colored[node];
+                dfs(child, visited, colored);
+
             }
     }
-    void color(bool *visited, long long *colored, T node)
+    void dfsTopSort(T node, bool *visited, List & topligicalSort)
     {
         for (auto child : Heads[node])
             if (!visited[child])
             {
                 visited[child] = true;
-                colored[child] = colored[node];
-                color(visited, colored, child);
+                dfsTopSort(child, visited, topligicalSort);
+                topligicalSort.addFront(child);
             }
     }
 
@@ -234,7 +247,7 @@ public:
 
                 ++cnt;
                 visited[node] = true;
-                dfs(visited, node);
+                dfs(node, visited);
             }
         }
         return cnt;
@@ -285,6 +298,21 @@ public:
         }
         return path; // if path.size() == 0 then there is no path
     }
+    List getTopligicalSort()
+    {
+        List topligicalSort;
+        bool visited[n];
+        for (T node = 0; node < n; ++node)
+        {
+            if (!visited[node])
+            {
+                visited[node] = true;
+                dfsTopSort(node, visited, topligicalSort);
+                topligicalSort.addFront(node);
+            }
+        }
+        return topligicalSort;
+    }
     // it maybe return a iterator in future
     // or it will return a List, but after improve operatot[] in list class
     long long *getNodeColors()
@@ -298,7 +326,7 @@ public:
             {
                 colored[node] = ++cnt;
                 visited[node] = true;
-                color(visited, colored, node);
+                dfs(node, visited, colored);
             }
         }
         return colored;
