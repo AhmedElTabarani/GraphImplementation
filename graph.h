@@ -173,14 +173,14 @@ class Graph
 
             }
     }
-    void dfsTopSort(T node, bool *visited, List & topligicalSort)
+    void dfsTopSort(T node, bool *visited, List & topologicalSort)
     {
         for (auto child : Heads[node])
             if (!visited[child])
             {
                 visited[child] = true;
-                dfsTopSort(child, visited, topligicalSort);
-                topligicalSort.addFront(child);
+                dfsTopSort(child, visited, topologicalSort);
+                topologicalSort.addFront(child);
             }
     }
 
@@ -298,20 +298,20 @@ public:
         }
         return path; // if path.size() == 0 then there is no path
     }
-    List getTopligicalSort()
+    List getTopologicalSort()
     {
-        List topligicalSort;
+        List topologicalSort;
         bool visited[n];
         for (T node = 0; node < n; ++node)
         {
             if (!visited[node])
             {
                 visited[node] = true;
-                dfsTopSort(node, visited, topligicalSort);
-                topligicalSort.addFront(node);
+                dfsTopSort(node, visited, topologicalSort);
+                topologicalSort.addFront(node);
             }
         }
-        return topligicalSort;
+        return topologicalSort;
     }
     // it maybe return a iterator in future
     // or it will return a List, but after improve operatot[] in list class
