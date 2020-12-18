@@ -11,7 +11,7 @@
     * `countConnectedComponents()`
     * `getPath(T from, T to) // Shorties Path`
     * `getNodeColors()`
-    * `getTopligicalSort()` 
+    * `getTopologicalSort()` 
     * ### List Class:
       * **Iterator Class to handle for(:)**
       * `add(val) // add to tail, O(1)`
@@ -92,11 +92,11 @@ int main()
     
     path.clear(); // To clear list
     cout <<'\n';
-    // To get Topligical Sort
-    auto top = graph.getTopligicalSort(); // it returns list
+    // To get Topological Sort
+    auto top = graph.getTopologicalSort(); // it returns list
     if (top.size() > 0) // if top.size() is 0 then there is no graph
     {
-        cout <<"The Topligical Sort is:\n";
+        cout <<"The Topological Sort is:\n";
         for (auto i : top)
             cout << i << ' ';
     }
@@ -118,7 +118,7 @@ No. of Components is: 1
 Nodes: 0, 3 are in the same Component
 The Shorties Path between 0, 3 is:
 0 1 3
-The Topligical Sort is:
+The Topological Sort is:
 0 4 1 3 2
 ```
 ## Solve : Romania Map Graph
