@@ -12,10 +12,10 @@ int main()
     g.addEdge(4, 3);
     g.addEdge(3, 2);
 
-    auto top = g.getTopligicalSort();
+    auto top = g.getTopologicalSort();
     if (top.size() > 0)
     {
-        cout <<"The Topligical Sort is:\n";
+        cout <<"The Topological Sort is:\n";
         for (auto i : top)
             cout << i << ' ';
     }
@@ -31,6 +31,6 @@ int main()
          |
          2
 
-    topligical sort: 0 4 1 3 2   
+    topological sort: 0 4 1 3 2   
     */
 }
